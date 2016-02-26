@@ -29,7 +29,7 @@ public class MultipleThreadSolution	extends Thread{
 	private String threadName;
 	public static File[] files;
 	
-	MultipleThreadSolution(String name) {
+	public MultipleThreadSolution(String name) {
 		threadName = name;
 		// System.out.println("Creating " + threadName);
 	}
