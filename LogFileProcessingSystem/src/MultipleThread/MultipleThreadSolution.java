@@ -23,7 +23,7 @@ public class MultipleThreadSolution	extends Thread{
 	// totalNum indicates the total number of files we have;
 	public static int curFileNum = 0;
 	public static int curCountNum = 0;
-	public static int curLineNum = 1;
+	public static long curLineNum = 1;
 	public static int totalNum = 0;
 	private Thread t;
 	private String threadName;
@@ -45,10 +45,10 @@ public class MultipleThreadSolution	extends Thread{
 	}
 	
 	// This function can read the given file, and add the content to a list line by line.
-	public static List<String> readFile(String FilePath){
+	public static List<String> readFile(File file){
 		List<String> lines = new ArrayList<String>();
 		try {
-			File file = new File(FilePath);
+			//File file = new File(FilePath);
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			// Read the file line by line;
@@ -63,7 +63,7 @@ public class MultipleThreadSolution	extends Thread{
 	}
 	
 	// This function can write all lines in a list to a file, and add line information to each line before writing to file.
-	public static void writeFile(String FilePath, List<String> lines, int StartLineNumber){
+	public static void writeFile(String FilePath, List<String> lines, long StartLineNumber){
 		try {
 			File fileSave = new File(FilePath);
 			PrintWriter pw = new PrintWriter(fileSave);
@@ -79,7 +79,7 @@ public class MultipleThreadSolution	extends Thread{
 	
 	// This function can check whether the given file is a log file.
 	public static boolean isLogFile(String filename) { 
-		Pattern p1 = Pattern.compile("logtest\\.[0-9-]+\\.log");
+		Pattern p1 = Pattern.compile("logtest\\.[0-9]+-[0-9]+-[0-9]+\\.log");
         Matcher m1 = p1.matcher(filename); 
         boolean rs1 = m1.matches(); 
         return rs1; 
@@ -91,8 +91,8 @@ public class MultipleThreadSolution	extends Thread{
 	public static synchronized void addCurCountNum(){
 		curCountNum++;
 	}
-	public static synchronized int addCurLineNum(int linenum){
-		int myLineNum = curLineNum;
+	public static synchronized long addCurLineNum(int linenum){
+		long myLineNum = curLineNum;
 		curCountNum++;
 		curLineNum += linenum;
 		return myLineNum;
@@ -121,7 +121,8 @@ public class MultipleThreadSolution	extends Thread{
 				addCurCountNum();
 			} else {
 				// Read the file;
-				List<String> lines = readFile(files[myFileNum].toString());
+				//List<String> lines = readFile(files[myFileNum].toString());
+				List<String> lines = readFile(files[myFileNum]);
 				// Wait if we have not get the start line number for current file;
 				//while (curCountNum < myFileNum) {
 				while (getCurCountNum() < myFileNum) {
@@ -135,7 +136,7 @@ public class MultipleThreadSolution	extends Thread{
 				// Set start line number of current to curLineNum, add the line numbers to curLineNum, and make curCountNum to next one;
 				//int myLineNum = curLineNum;
 				//curLineNum += lines.size();
-				int myLineNum = addCurLineNum(lines.size());
+				long myLineNum = addCurLineNum(lines.size());
 				//curCountNum++;
 				//addCurCountNum();
 				// Save file;
