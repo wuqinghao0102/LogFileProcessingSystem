@@ -83,35 +83,61 @@ public class MultipleThreadSolution	extends Thread{
         Matcher m1 = p1.matcher(filename); 
         boolean rs1 = m1.matches(); 
         return rs1; 
-    } 
+    }
+	
+	public static synchronized int getMyFileNum(){
+		return curFileNum++;
+	}
+	public static synchronized void addCurCountNum(){
+		curCountNum++;
+	}
+	public static synchronized int addCurLineNum(int linenum){
+		int myLineNum = curLineNum;
+		curCountNum++;
+		curLineNum += linenum;
+		return myLineNum;
+	}
+	public static synchronized int getCurFileNum(){
+		return curFileNum;
+	}
+	public static synchronized int getCurCountNum(){
+		return curCountNum;
+	}
+	
 	// Each thread will read file, modify file, and save file continually until finish modifying all files.
 	public void run() {
 		// System.out.println("Running " + threadName);
 		// Check whether there are still file not modified;
-		while (curFileNum < totalNum) {
+		//while (curFileNum < totalNum) {
+		while (getCurFileNum() < totalNum) {
 			// Get the file number this thread will modify, and make curFileNum to next one;
-			int myFileNum = curFileNum++;
+			//int myFileNum = curFileNum++;
+			int myFileNum = getMyFileNum();
 			// System.out.println(threadName + ": " + myFileNum);
 			// Check whether the file is a log file or not;
 			if (!isLogFile(files[myFileNum].getName())) {
 				//Just make curCountNum to next one, and skip this file;
-				curCountNum++;
+				//curCountNum++;
+				addCurCountNum();
 			} else {
 				// Read the file;
 				List<String> lines = readFile(files[myFileNum].toString());
 				// Wait if we have not get the start line number for current file;
-				while (curCountNum < myFileNum) {
+				//while (curCountNum < myFileNum) {
+				while (getCurCountNum() < myFileNum) {
 					try {
-						Thread.sleep(1);
+						Thread.sleep(0);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				// Set start line number of current to curLineNum, add the line numbers to curLineNum, and make curCountNum to next one;
-				int myLineNum = curLineNum;
-				curLineNum += lines.size();
-				curCountNum++;
+				//int myLineNum = curLineNum;
+				//curLineNum += lines.size();
+				int myLineNum = addCurLineNum(lines.size());
+				//curCountNum++;
+				//addCurCountNum();
 				// Save file;
 				writeFile(files[myFileNum].toString(), lines, myLineNum);
 			}

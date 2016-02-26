@@ -69,6 +69,10 @@ public class SingleThreadSolution {
 	}
 	
 	public static void main(String args[]){
+		if (args.length != 1) {
+			throw new IllegalArgumentException(
+					"Exactly 1 parameters required !");
+		}
 		String folderName = args[0];
 		AddLineNumFolder(folderName);
 	}
