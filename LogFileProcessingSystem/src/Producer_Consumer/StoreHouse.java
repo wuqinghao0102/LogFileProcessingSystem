@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+// define the data structure for file.
 class file{
 	public List<String> lines;
 	public int fileNumber;
@@ -17,6 +18,7 @@ class file{
 		startLineNumber = sl;
 	}
 }
+
 public class StoreHouse {
 	private Queue<file> files = new LinkedList<file>();
 	private int fileNumber = 0;
@@ -47,11 +49,12 @@ public class StoreHouse {
 		fileNumber ++;
 		return curLineNumber;
 	}
-	
+	// Add a file to storehouse.
 	public synchronized void addFile(List<String> file, int fileNumber, String fileName){
 		files.add(new file(file, fileNumber, fileName, getLineNumber(file)));
 	}
 	
+	// Get a file from storehouse.
 	public synchronized file getFile(){
 			return files.poll();
 	}

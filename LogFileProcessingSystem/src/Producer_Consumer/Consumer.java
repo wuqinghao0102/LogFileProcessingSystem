@@ -33,11 +33,14 @@ public class Consumer implements Runnable{
 	
 	@Override
     public void run() {
-          while(storeHouse.getFileNumber() < totalnum || !storeHouse.getQueueStatus()){
-        	  file fileToWrite = storeHouse.getFile();
-        	  if(fileToWrite != null){
-        		  writeFile(fileToWrite.fileName, fileToWrite.lines, fileToWrite.startLineNumber);
-        	  }
-          }
+		// Get a file to write from storehouse.
+		while (storeHouse.getFileNumber() < totalnum
+				|| !storeHouse.getQueueStatus()) {
+			file fileToWrite = storeHouse.getFile();
+			if (fileToWrite != null) {
+				writeFile(fileToWrite.fileName, fileToWrite.lines,
+						fileToWrite.startLineNumber);
+			}
+		}
     }
 }

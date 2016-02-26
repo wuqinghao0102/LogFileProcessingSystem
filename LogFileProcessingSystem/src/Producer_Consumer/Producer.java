@@ -39,6 +39,7 @@ public class Producer implements Runnable{
         while(storeHouse.getNextRead() < totalNum){
         	int fileNum = storeHouse.ReadNext();
         	List<String> lines = readFile(files[fileNum]);
+        	// add the file to storehouse when all its previous files are already there.
         	while(storeHouse.getFileNumber() < fileNum){
     			try {
     				Thread.sleep(0);
@@ -47,6 +48,7 @@ public class Producer implements Runnable{
     				e.printStackTrace();
     			}
     		}
+        	// Make sure the storehouse has no more than 1000 files waiting to write.
         	while(storeHouse.QueueLimit()){
         		try {
     				Thread.sleep(1);
