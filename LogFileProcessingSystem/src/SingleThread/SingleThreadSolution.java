@@ -20,7 +20,7 @@ public class SingleThreadSolution {
 	// This function is used to check whether the given file is a log file or not.
 	// This function use regular expression to check whether the given string satisfy the given pattern.
 	public static boolean isLogFile(String filename) { 
-		Pattern p1 = Pattern.compile("logtest\\.[0-9-]+\\.log");
+		Pattern p1 = Pattern.compile("logtest\\.[0-9]+-[0-9]+-[0-9]+\\.log");
         Matcher m1 = p1.matcher(filename); 
         boolean rs1 = m1.matches(); 
         return rs1; 
@@ -69,6 +69,10 @@ public class SingleThreadSolution {
 	}
 	
 	public static void main(String args[]){
+		if (args.length != 1) {
+			throw new IllegalArgumentException(
+					"Exactly 1 parameters required !");
+		}
 		String folderName = args[0];
 		AddLineNumFolder(folderName);
 	}
