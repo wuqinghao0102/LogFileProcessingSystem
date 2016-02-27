@@ -14,10 +14,11 @@ LogFileProcessingSystem_m.jar, LogFileProcessingSystem_m2.jar:
 These two jar files are the multithreading versions of my solution, you can use the following command to run this jar file:
 
 java -jar LogFileProcessingSystem_m.jar YourFileFolder 8
-java -jar LogFileProcessingSystem_m2.jar YourFileFolder 8
+java -jar LogFileProcessingSystem_m2.jar YourFileFolder 8 8
 
 "YourFileFolder" is the your corresponding directory that contains your log files.
-8 is the number of thread you want to use, you can set it to any number larger than 0.
+For the first one, 8 is the number of thread you want to use, you can set it to any number larger than 0.
+For the second one, the first 8 is the number of threads for reading, and the second 8 is the number of threads for writing. They can be different numbers, but both of them should be greater than 0.
 
 
 ATTENTION:

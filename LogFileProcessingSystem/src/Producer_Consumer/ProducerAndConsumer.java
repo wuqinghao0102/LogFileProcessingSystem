@@ -44,7 +44,7 @@ public class ProducerAndConsumer {
 	} 
 	
 	public static void main(String[] args) {
-		if (args.length != 2) {
+		if (args.length != 3) {
 			throw new IllegalArgumentException(
 					"Exactly 2 parameters required !");
 		}
@@ -53,17 +53,19 @@ public class ProducerAndConsumer {
 		StoreHouse storeHouse = new StoreHouse();
 		Producer producer = new Producer(storeHouse, filteredfiles.length, filteredfiles);
 		Consumer consumer = new Consumer(storeHouse, filteredfiles.length);
-		int ThreadNum = 1;
+		int ThreadNum_r = 1;
+		int ThreadNum_w = 1;
 		try {
-			ThreadNum = Integer.parseInt(args[1]);
+			ThreadNum_r = Integer.parseInt(args[1]);
+			ThreadNum_w = Integer.parseInt(args[2]);
 		} catch (NumberFormatException nbfe) {
 			System.out.println("The second parameters should be a number, we will use single thread.");
 		}
-		for(int i=0; i<ThreadNum; i++){
+		for(int i=0; i<ThreadNum_r; i++){
 			new Thread(producer).start();
 		}
 		
-		for(int i=0; i<ThreadNum; i++){
+		for(int i=0; i<ThreadNum_w; i++){
 			new Thread(consumer).start();
 		}
 	}
