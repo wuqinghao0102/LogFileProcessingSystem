@@ -3,6 +3,8 @@ package Producer_Consumer;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 // define the data structure for file.
 class file{
@@ -20,7 +22,7 @@ class file{
 }
 
 public class StoreHouse {
-	private Queue<file> files = new LinkedList<file>();
+	private BlockingQueue<file> files = new LinkedBlockingQueue<file>();
 	private int fileNumber = 0;
 	private long lineNumber = 1;
 	private int nextRead = 0;
